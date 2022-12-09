@@ -1,0 +1,42 @@
+.navbar {
+  background-color: #fff;
+  width: 100%;
+}
+
+.container {
+  margin: 0 50px;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1140px;
+}
+
+.nav {
+  flex: 1;
+}
+
+.nav__list {
+  list-style-type: none;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 27px;
+}
+
+.nav__item {
+  margin: 0;
+}
+
+.nav__item:first-of-type {
+  margin-right: auto;
+}
+
+.nav__link {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: #566885;
+}
