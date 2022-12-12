@@ -37,7 +37,7 @@ const signIn = async (req, res) => {
       isRightPassword = bcrypt.hashSync(password, candidate.password)
       if (isRightPassword) {
         const jwt = token.sign({_id: candidate._id}, process.env.SECRET_KEY || '123456789')
-        return res.json({message: 'Вы успешно авторизовались!', token: jwt, role: candidate.roles})
+        return res.json({message: 'Вы успешно авторизовались!', user: candidate, token: jwt, role: candidate.roles})
       }
     }
     return res.json({message: 'Пользователя с таким именем не существует!'})
@@ -45,7 +45,6 @@ const signIn = async (req, res) => {
     console.log(e)
     return res.json({message: 'что-то пошло не так', e})
   }
-  return res.json({ message: 'it is signin' })
 }
 
 const getUser = async (req, res) => {

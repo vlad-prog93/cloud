@@ -4,10 +4,13 @@ const User = require('../models/User')
 const checkAuth = (req, res, next) => {
   try {
     const jwt = req.headers.authorization?.split(' ')[1]
-    const isVerify = token.verify(jwt, process.env.SECRET_KEY || '123456789')
-    if (isVerify) {
-      req.userId = isVerify._id
-      return next()
+    if (jwt) {
+      const isVerify = token.verify(jwt, process.env.SECRET_KEY || '123456789')
+      if (isVerify) {
+        req.userId = isVerify._id
+        return next()
+      }
+      return res.status(403).json({message: "Пользователь не авторизован!"})
     }
     return res.status(403).json({message: "Пользователь не авторизован"})
   } catch(e) {
