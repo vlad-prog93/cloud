@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt')
 const token = require('jsonwebtoken')
 const validator = require('express-validator')
-
+const fileService = require('../services/fileService')
 const User = require('../models/User')
+const File = require('../models/File')
+
 
 const signUp = async (req, res) => {
   const errors = validator.validationResult(req)
@@ -17,6 +19,7 @@ const signUp = async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
     const user = await new User({ username, password: hash, roles: [role] })
+    await fileService.createDir(new File({user: user._id, name: '', type: 'dir'}))
     await user.save()
     return res.json({ message: 'Вы успешно зарегестрировались!', id: user._id, role: user.roles })
   } catch (e) {

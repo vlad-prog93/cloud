@@ -2,7 +2,8 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
 const mongoose = require('mongoose')
-const auth = require('./routes/auth')
+const authRouter = require('./routes/auth')
+const fileRouter = require('./routes/file')
 const PORT  = process.env.PORT || 5001
 const app = express()
 
@@ -11,7 +12,8 @@ app.use(cors())
 
 
 
-app.use('/api/auth', auth)
+app.use('/api/auth', authRouter)
+app.use('/api/file', fileRouter)
 const start = async() => {
   try {
     mongoose.connect('mongodb://127.0.0.1:27017/cloud')
