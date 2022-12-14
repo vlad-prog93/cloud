@@ -9,6 +9,7 @@ const File = new mongoose.Schema({
   user: {type: mongoose.Types.ObjectId, ref: 'User'},
   parent: {type: mongoose.Types.ObjectId, ref: 'File'},
   childs: [{type: mongoose.Types.ObjectId, ref: 'File'}],
+  date: {type: Date, default: Date.now()}
 })
 
 

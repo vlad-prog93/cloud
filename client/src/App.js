@@ -1,11 +1,12 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-import NavBar from './components/NavBar/NavBar';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import './App.css'
+import NavBar from './components/NavBar/NavBar'
 import Login from './components/Login/Login'
+import Disk from './components/Disk/Disk'
 import Register from './components/Register/Register'
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getUser } from './store/actions/auth';
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getUser } from './store/actions/auth'
 
 function App() {
   const {isAuth} = useSelector(state => state.user)
@@ -20,10 +21,17 @@ function App() {
       <NavBar />
       <div className="App">
         <div className='wrapper'>
-          {!isAuth && 
+          {!isAuth 
+          ? 
           <Routes>
             <Route path='/signup' element={<Register />} />
             <Route path='/signin' element={<Login />} />
+          </Routes>
+          :
+          <Routes>
+            <Route path='/' element={<Disk />} />
+            <Route path='*' element={<Navigate to='/' />} />
+            
           </Routes>
           }
         </div>

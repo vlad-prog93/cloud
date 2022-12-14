@@ -5,7 +5,7 @@ const initialState = {
   isAuth: false
 }
 
-export default (state=initialState, action) => {
+const userReducer = (state=initialState, action) => {
   switch (action.type) {
     case SET_USER:
       return {
@@ -28,3 +28,5 @@ export const loginAC = (user) => {
 export const logoutAC = () => {
   return {type: LOG_OUT}
 }
+
+export default userReducer

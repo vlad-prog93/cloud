@@ -4,7 +4,7 @@ import { loginAC } from '../reducers/userReducer'
 
 export const registration = async (username, password) => {
     try {
-        const res = await axios.post(URL + '/signup', {
+        const res = await axios.post(URL + '/auth/signup', {
             username,
             password
         })
@@ -17,7 +17,7 @@ export const registration = async (username, password) => {
 export const login = (username, password) => {
     return async dispatch => {
         try {
-            const res = await axios.post(URL + '/signin', {
+            const res = await axios.post(URL + '/auth/signin', {
                 username,
                 password
             })
@@ -25,7 +25,7 @@ export const login = (username, password) => {
             dispatch(loginAC(res.data.user))
             console.log(res.data)
         } catch (e) {
-            console.log(e.response.data.message)
+            console.log(e.response.message)
         }
     }
 }
@@ -33,12 +33,12 @@ export const login = (username, password) => {
 export const getUser = () => {
     return async dispatch => {
         try {
-            const res = await axios.get(URL + '/me', {headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+            const res = await axios.get(URL + '/auth/me', {headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
             dispatch(loginAC(res.data.user))
             console.log(res.data)
         } catch (e) {
             localStorage.removeItem('token')
-            console.log(e.response.data)
+            console.log(e.response)
         }
     }
 }
