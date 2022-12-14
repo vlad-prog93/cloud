@@ -7,9 +7,10 @@ import Register from './components/Register/Register'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUser } from './store/actions/auth'
+import Modal from './components/Modal/Modal'
 
 function App() {
-  const {isAuth} = useSelector(state => state.user)
+  const { isAuth } = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -17,26 +18,29 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <NavBar />
-      <div className="App">
-        <div className='wrapper'>
-          {!isAuth 
-          ? 
-          <Routes>
-            <Route path='/signup' element={<Register />} />
-            <Route path='/signin' element={<Login />} />
-          </Routes>
-          :
-          <Routes>
-            <Route path='/' element={<Disk />} />
-            <Route path='*' element={<Navigate to='/' />} />
-            
-          </Routes>
-          }
+    <>
+      <BrowserRouter>
+        <NavBar />
+        <div className="App">
+          <div className='wrapper'>
+            {!isAuth
+              ?
+              <Routes>
+                <Route path='/signup' element={<Register />} />
+                <Route path='/signin' element={<Login />} />
+              </Routes>
+              :
+              <Routes>
+                <Route path='/' element={<Disk />} />
+                <Route path='*' element={<Navigate to='/' />} />
+
+              </Routes>
+            }
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+      <Modal />
+    </>
   );
 }
 
