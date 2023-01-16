@@ -3,10 +3,12 @@ const SET_FILE = 'SET_FILE'
 const OPEN_MODAL = 'OPEN_MODAL'
 const CLOSE_MODAL = 'CLOSE_MODAL'
 const CREATE_DIR = 'CREATE_DIR'
+const SET_CURRENT_DIR ='SET_CURRENT_DIR'
+const BACK_CURRENT_DIR = 'BACK_CURRENT_DIR'
 
 const initialState = {
   files: [],
-  currentDir: null,
+  currentDir: [],
   visibleModal: false
 }
 
@@ -16,6 +18,9 @@ const fileReducer = (state=initialState, action) => {
     case OPEN_MODAL: return {...state, visibleModal: true}
     case CLOSE_MODAL: return {...state, visibleModal: false}
     case CREATE_DIR: return {...state, files: [...state.files, action.payload]}
+    case SET_CURRENT_DIR:
+      return {...state, currentDir: [...state.currentDir, action.payload]}
+    case BACK_CURRENT_DIR: return {...state, currentDir: [...state.currentDir].slice(0, -1)}
     default:
       return state
   }
@@ -35,6 +40,14 @@ export const openModalAC = () => {
 
 export const closeModalAC = () => {
   return {type: CLOSE_MODAL}
+}
+
+export const setCurrentDir = (fileDir) => {
+  return {type: SET_CURRENT_DIR, payload: fileDir}
+}
+
+export const backCurrentDir = () => {
+  return {type: BACK_CURRENT_DIR}
 }
 
 export default fileReducer

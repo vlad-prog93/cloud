@@ -1,9 +1,9 @@
 import axios from "axios"
 import { URL } from "../../utils/constants"
-import { getFilesAC, creacteDirAC, closeModalAC } from '../reducers/fileReducer'
+import { getFilesAC, creacteDirAC, closeModalAC, setCurrentDir } from '../reducers/fileReducer'
 
 
-export const getFiles = (dir) => {
+export const getFiles = (dir = null) => {
   return async dispatch => {
     try {
       const res = await axios.get(URL + `/files${dir ? '?parent=' + dir : ''}`, {
@@ -18,12 +18,13 @@ export const getFiles = (dir) => {
   }
 }
 
-export const creacteDir = (name) => {
+export const creacteDir = (name, dir) => {
   return async dispatch => {
     try {
       const res = await axios.post(URL + `/files`,{
         type: "dir",
-        name
+        name,
+        parent: dir
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         

@@ -1,11 +1,22 @@
 import './FileItem.css'
 import dirSvg from '../../img/dir.svg'
 import fileSvg from '../../img/file.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCurrentDir } from '../../store/reducers/fileReducer'
+import { getFiles } from '../../store/actions/files'
 
 const FileItem = ({ file }) => {
+  const dispatch = useDispatch()
+  const currentDir = useSelector(state => state.files.currentDir)
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    dispatch(setCurrentDir(file._id))
+    dispatch(getFiles(file._id))
+  }
 
   return (
-    <div className='file'>
+    <div className='file' onClick={e => handleClick(e)}>
       <p className="file__text file__name">
         <img src={file.type === 'dir' ? dirSvg : fileSvg} alt="#" />
         {file.name}

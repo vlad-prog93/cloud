@@ -7,6 +7,7 @@ import './Modal.css'
 
 const Modal = () => { 
   const dispatch = useDispatch()
+  const currentDir = useSelector(state => state.files.currentDir)
   const [dirName, setDirName] = useState('')
   const active = useSelector(state => state.files.visibleModal)
   const modalClass = active ? 'modal modal_active' : 'modal' 
@@ -18,7 +19,7 @@ const Modal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(creacteDir(dirName))
+    dispatch(creacteDir(dirName, currentDir[currentDir.length-1]))
   }
 
   return (

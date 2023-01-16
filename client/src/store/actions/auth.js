@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {URL} from '../../utils/constants'
 import { loginAC } from '../reducers/userReducer'
+import {setCurrentDir} from '../reducers/fileReducer'
 
 export const registration = async (username, password) => {
     try {
@@ -23,6 +24,7 @@ export const login = (username, password) => {
             })
             localStorage.setItem('token', res.data.token)
             dispatch(loginAC(res.data.user))
+            dispatch(setCurrentDir(res.data.user._id))
             console.log(res.data)
         } catch (e) {
             console.log(e.response.message)

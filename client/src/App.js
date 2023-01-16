@@ -33,7 +33,6 @@ function App() {
               <Routes>
                 <Route path='/' element={<Disk />} />
                 <Route path='*' element={<Navigate to='/' />} />
-
               </Routes>
             }
           </div>

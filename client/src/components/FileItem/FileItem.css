@@ -5,8 +5,9 @@
   margin-top: 30px;
   border-bottom: 2px solid #566885;
   color: #566885;
+  transition: transform 0.2s linear;
+  cursor: pointer;
 }
-
 
 .file__date {
   grid-column-start: 5;
@@ -25,4 +26,8 @@
 
 .file__text img {
   margin-right: 10px;
+}
+
+.file:hover {
+  transform: scale(1.01);
 }

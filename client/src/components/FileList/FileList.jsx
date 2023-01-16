@@ -6,16 +6,18 @@ import './FileList.css'
 
 const FileList = () => {
   const dispatch = useDispatch()
-  const files = useSelector(state => state.files.files)
+  const files = useSelector(state => state.files)
   
 
   useEffect(() => {
-    dispatch(getFiles())
-  }, [])
+    console.log(files.currentDir)
+    console.log(files.currentDir[files.currentDir.length-1])
+    dispatch(getFiles(files.currentDir[files.currentDir.length-1]))
+  }, [dispatch, files.currentDir])
 
   return (
     <div>
-      {files.map(file => <FileItem key={file.name} file={file}/>)}
+      {files.files.map(file => <FileItem key={file.name} file={file}/>)}
     </div>
   )
 }
