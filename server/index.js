@@ -1,4 +1,5 @@
 const express = require('express')
+const fileUpload = require('express-fileupload')
 const cors = require('cors')
 require('dotenv').config()
 const mongoose = require('mongoose')
@@ -8,6 +9,7 @@ const PORT  = process.env.PORT || 5001
 const app = express()
 
 app.use(express.json())
+app.use(fileUpload({}))
 app.use(cors())
 
 
