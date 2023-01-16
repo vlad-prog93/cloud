@@ -36,8 +36,11 @@ const uploadFile = async (req, res) => {
     if (user.usedSpace + file.size > user.diskSpace) {
       return res.status(400).json({message: 'Недостаточно места на диске'})
     }
+    console.log(user.usedSpace)
+    console.log(file)
+    console.log(user.diskSpace)
 
-    user.diskSpace = user.usedSpace + file.size
+    user.usedSpace = user.usedSpace + file.size
 
     let pathFile
     if (parentDir) {
@@ -63,7 +66,7 @@ const uploadFile = async (req, res) => {
     await dbFile.save()
     await user.save()
 
-    return res.json({message: 'Файл успешно добавлен'})
+    return res.json({file: dbFile})
 
 
   } catch (e) {
