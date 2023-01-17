@@ -10,13 +10,12 @@ const FileItem = ({ file }) => {
   const currentDir = useSelector(state => state.files.currentDir)
 
   const handleClick = (e) => {
-    e.preventDefault()
     dispatch(setCurrentDir(file._id))
     dispatch(getFiles(file._id))
   }
 
   return (
-    <div className='file' onClick={e => handleClick(e)}>
+    <div className='file' onClick={file.type === "dir" ? () => handleClick() : () => console.log('file') }>
       <p className="file__text file__name">
         <img src={file.type === 'dir' ? dirSvg : fileSvg} alt="#" />
         {file.name}

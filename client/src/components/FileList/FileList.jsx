@@ -10,8 +10,7 @@ const FileList = () => {
   
 
   useEffect(() => {
-    console.log(files.currentDir)
-    console.log(files.currentDir[files.currentDir.length-1])
+    console.log(files)
     dispatch(getFiles(files.currentDir[files.currentDir.length-1]))
   }, [dispatch, files.currentDir])
 

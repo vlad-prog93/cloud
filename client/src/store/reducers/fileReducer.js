@@ -5,6 +5,7 @@ const CLOSE_MODAL = 'CLOSE_MODAL'
 const CREATE_DIR = 'CREATE_DIR'
 const SET_CURRENT_DIR ='SET_CURRENT_DIR'
 const BACK_CURRENT_DIR = 'BACK_CURRENT_DIR'
+const UPLOAD_FILES = 'UPLOAD_FILES'
 
 const initialState = {
   files: [],
@@ -18,9 +19,9 @@ const fileReducer = (state=initialState, action) => {
     case OPEN_MODAL: return {...state, visibleModal: true}
     case CLOSE_MODAL: return {...state, visibleModal: false}
     case CREATE_DIR: return {...state, files: [...state.files, action.payload]}
-    case SET_CURRENT_DIR:
-      return {...state, currentDir: [...state.currentDir, action.payload]}
+    case SET_CURRENT_DIR: return {...state, currentDir: [...state.currentDir, action.payload]}
     case BACK_CURRENT_DIR: return {...state, currentDir: [...state.currentDir].slice(0, -1)}
+    case UPLOAD_FILES: return {...state, files: [...state.files, action.payload]}
     default:
       return state
   }
@@ -48,6 +49,10 @@ export const setCurrentDir = (fileDir) => {
 
 export const backCurrentDir = () => {
   return {type: BACK_CURRENT_DIR}
+}
+
+export const uploadFilesAC = (file) => {
+  return {type: UPLOAD_FILES, payload: file}
 }
 
 export default fileReducer

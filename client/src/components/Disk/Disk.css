@@ -1,6 +1,30 @@
 .disk {
   margin-top: 30px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
+.disk__drop {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  flex: 1;
+  border: 1px solid #566885;
+  color: #566885
+  
+}
+.disk__tools {
+  display: flex;
+}
+
+.disk__form {
+  display: flex;
+}
+
 .disk__button {
   border: 1px solid #566885;
   border-radius: 15px;
