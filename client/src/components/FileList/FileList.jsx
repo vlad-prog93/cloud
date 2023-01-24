@@ -7,10 +7,8 @@ import './FileList.css'
 const FileList = () => {
   const dispatch = useDispatch()
   const files = useSelector(state => state.files)
-  
 
   useEffect(() => {
-    console.log(files)
     dispatch(getFiles(files.currentDir[files.currentDir.length-1]))
   }, [dispatch, files.currentDir])
 

@@ -6,6 +6,7 @@ const CREATE_DIR = 'CREATE_DIR'
 const SET_CURRENT_DIR ='SET_CURRENT_DIR'
 const BACK_CURRENT_DIR = 'BACK_CURRENT_DIR'
 const UPLOAD_FILES = 'UPLOAD_FILES'
+const DELETE_FILE = 'DELETE_FILE'
 
 const initialState = {
   files: [],
@@ -22,6 +23,7 @@ const fileReducer = (state=initialState, action) => {
     case SET_CURRENT_DIR: return {...state, currentDir: [...state.currentDir, action.payload]}
     case BACK_CURRENT_DIR: return {...state, currentDir: [...state.currentDir].slice(0, -1)}
     case UPLOAD_FILES: return {...state, files: [...state.files, action.payload]}
+    case DELETE_FILE: return {...state, files: [...state.files.filter(file => file._id !== action.payload)]}
     default:
       return state
   }
@@ -53,6 +55,10 @@ export const backCurrentDir = () => {
 
 export const uploadFilesAC = (file) => {
   return {type: UPLOAD_FILES, payload: file}
+}
+
+export const deleteFileAC = (id) => {
+  return {type: DELETE_FILE, payload: id}
 }
 
 export default fileReducer

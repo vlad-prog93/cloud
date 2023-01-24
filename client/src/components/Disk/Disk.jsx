@@ -17,7 +17,10 @@ const Disk = () => {
 
   const handleUploadFile = (e) => {
     const sendfiles = [...e.target.files]
-    sendfiles.forEach(file => dispatch(uploadFiles(file, files.currentDir[files.currentDir.length - 1])))
+    sendfiles.forEach(file => {
+      dispatch(uploadFiles(file, files.currentDir[files.currentDir.length - 1]))
+    })
+    e.target.value = ''
   }
 
   const handleDragEnter = (e) => {
@@ -40,6 +43,7 @@ const Disk = () => {
     const sendfiles = [...e.dataTransfer.files]
     sendfiles.forEach(file => dispatch(uploadFiles(file, files.currentDir[files.currentDir.length - 1])))
     setIsOnDrop(false)
+    
   }
 
   return (
@@ -49,7 +53,7 @@ const Disk = () => {
         : <><div className='disk__tools'>
           <button type='button' className="disk__button" onClick={() => back()}>Назад</button>
           <button type='button' onClick={() => dispatch(openModalAC())} className="disk__button">Создать новую папку</button>
-          <form className='disk__form' onSubmit={(e) => handleUploadFile(e)}>
+          <form className='disk__form'>
             <label className="disk__button" htmlFor='input__upload'>Загрузить файл</label>
             <input onChange={(e) => handleUploadFile(e)} multiple={true} type="file" id='input__upload' style={{ 'display': 'none' }} />
           </form>

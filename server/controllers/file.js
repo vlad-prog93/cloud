@@ -30,15 +30,12 @@ const uploadFile = async (req, res) => {
   try {
     const file = req.files.file
     const parent = req.body.parent
-    const parentDir = await File.findOne({user: req.userId, _id: parent})
-    const user = await User.findOne({_id: req.userId})
+    const parentDir = await File.findOne({ user: req.userId, _id: parent })
+    const user = await User.findOne({ _id: req.userId })
 
     if (user.usedSpace + file.size > user.diskSpace) {
-      return res.status(400).json({message: 'Недостаточно места на диске'})
+      return res.status(400).json({ message: 'Недостаточно места на диске' })
     }
-    console.log(user.usedSpace)
-    console.log(file)
-    console.log(user.diskSpace)
 
     user.usedSpace = user.usedSpace + file.size
 
@@ -50,11 +47,11 @@ const uploadFile = async (req, res) => {
     }
 
     if (fs.existsSync(pathFile)) {
-      return res.status(400).json({message: 'Файл с таким именем уже существует'})
+      return res.status(400).json({ message: 'Файл с таким именем уже существует' })
     }
     file.mv(pathFile)
 
-    const dbFile = await new File({
+    const dbFile = new File({
       type: file.name.split('.').pop(),
       name: file.name,
       size: file.size,
@@ -66,12 +63,51 @@ const uploadFile = async (req, res) => {
     await dbFile.save()
     await user.save()
 
-    return res.json({file: dbFile})
+    return res.json({ file: dbFile })
 
 
   } catch (e) {
     console.log(e)
     return res.status(400).json({ message: 'Ошибка создания файла' })
+  }
+}
+
+const downloadFile = async (req, res) => {
+  try {
+    const file = await File.findOne({ user: req.userId, _id: req.query.id })
+    const pathFile = path.join(__dirname, '../files', req.userId, file.path, file.name)
+    if (fs.existsSync(pathFile)) {
+      return res.download(pathFile)
+    }
+    return res.status(400).json({ message: 'Файл не найден' })
+
+  } catch (e) {
+    console.log(e)
+    return res.status(500).json({ message: 'Ошибка загрузки файла' })
+  }
+}
+
+const deleteFile = async (req, res) => {
+  try {
+    const file = await File.findOne({ user: req.userId, _id: req.query.id })
+    const pathFile = path.join(__dirname, '../files', req.userId, file.path, file.name || '')
+
+    if (file.type === "dir") {
+      const pathFile = path.join(__dirname, '../files', req.userId, file.path)
+      fs.rmdirSync(pathFile)
+      const dbFile = await file.remove()
+      return res.json({ file: dbFile })
+    } else {
+      if (fs.existsSync(pathFile)) {
+        fs.unlinkSync(pathFile)
+        const dbFile = await File.findOneAndDelete({ user: req.userId, _id: req.query.id })
+        return res.json({ file: dbFile })
+      }
+    }
+    return res.status(400).json({ message: 'Файл не найден' })
+  } catch (e) {
+    console.log(e)
+    return res.status(400).json({ message: 'Папка не пуста' })
   }
 }
 
@@ -89,5 +125,7 @@ const getFiles = async (req, res) => {
 module.exports = {
   createDir,
   getFiles,
-  uploadFile
+  uploadFile,
+  downloadFile,
+  deleteFile
 }
