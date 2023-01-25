@@ -13,27 +13,23 @@ const FileItem = ({ file }) => {
   const handleClick = (e) => {
     dispatch(setCurrentDir(file._id))
     dispatch(getFiles(file._id))
-    console.log('click')
   }
 
   const handleDownload = (e) => {
     e.preventDefault()
     dispatch(downloadFile(file))
-    console.log('download')
   }
 
   const handleDelete = (e) => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(deleteFile(file))
-    console.log('delete')
-    console.log(files)
   }
   return (
-    <div className='file' onClick={file.type === "dir" ? () => handleClick() : undefined }>
+    <div className='file' onClick={file.type === "dir" ? () => handleClick() : console.log(file.name) }>
       <p className="file__text file__name">
         <img src={file.type === 'dir' ? dirSvg : fileSvg} alt="#" />
-        {file.name}
+        {<p>{file.name}</p>}
       </p>
       {file.type !== "dir" && <p className="file__text file__download" onClick={(e) => handleDownload(e)}>Загрузить</p>}
       <p className="file__text file__delete" onClick={(e) => handleDelete(e)}>Удалить</p>

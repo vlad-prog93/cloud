@@ -1,8 +1,10 @@
 const fs = require('fs')
 const path = require('path')
+const iconv = require('iconv-lite')
 const fileService = require('../services/fileService')
 const User = require('../models/User')
 const File = require('../models/File')
+
 
 const createDir = async (req, res) => {
   try {
@@ -39,6 +41,8 @@ const uploadFile = async (req, res) => {
 
     user.usedSpace = user.usedSpace + file.size
 
+    file.name = iconv.decode(file.name, 'utf-8')
+    
     let pathFile
     if (parentDir) {
       pathFile = path.join(__dirname, `../files/${user._id}/${parentDir.path}/${file.name}`)

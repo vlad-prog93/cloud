@@ -30,7 +30,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  
+}
+
+.file__text p {
+  max-width: 100px;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all 0.3s linear;
+}
+
+.file__text p:hover {
+  max-width: 300px;
+  text-overflow: clip;
+  overflow: visible;
 }
 
 .file__text img {
