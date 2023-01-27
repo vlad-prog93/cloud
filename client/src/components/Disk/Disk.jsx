@@ -1,15 +1,18 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FileList from '../FileList/FileList'
 import { openModalAC, backCurrentDir } from '../../store/reducers/fileReducer'
 import './Disk.css'
 import { getFiles, uploadFiles } from '../../store/actions/files'
+import Uploaded from '../Uploaded/Uploaded'
 
 const Disk = () => {
-  const [isOnDrop, setIsOnDrop] = React.useState(false)
-  const dispatch = useDispatch()
+  const [isOnDrop, setIsOnDrop] = useState(false)
   const files = useSelector(state => state.files)
-
+  const isVisibleUploaded = useSelector(state => state.uploaded.visible)
+  const uploadedFiles = useSelector(state => state.uploaded.files)
+  const dispatch = useDispatch()
 
   const back = () => {
     dispatch(backCurrentDir())
@@ -46,6 +49,10 @@ const Disk = () => {
     
   }
 
+  useEffect(() => {
+    dispatch(getFiles(files.currentDir[files.currentDir.length-1]))
+  }, [dispatch, files.currentDir])
+
   return (
     <section className="disk" onDrop={handleDrop} onDragEnter={handleDragEnter} onDragOver={handleDragEnter} onDragLeave={handleDragLeave}>
       {isOnDrop
@@ -63,7 +70,9 @@ const Disk = () => {
             <p className='disk__text disk__date'>Дата</p>
             <p className='disk__text disk__size'>Размер</p>
           </div>
-          <FileList /></>
+          <FileList files={files} />
+          {isVisibleUploaded && <Uploaded files={uploadedFiles} />}
+          </>
       }
     </section >
 

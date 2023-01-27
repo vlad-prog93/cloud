@@ -1,0 +1,27 @@
+.uploaded {
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  height: 400px;
+  background-color: #566885;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.uploaded__button {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 10px;
+  color: #E5E5E5;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  font-size: 25px;
+  transition: all 0.3s linear;
+}
+
+.uploaded__button:hover {
+  color: gold;
+}

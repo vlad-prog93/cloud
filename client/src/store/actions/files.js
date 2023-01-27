@@ -1,14 +1,12 @@
-import axios from "axios"
-import { URL } from "../../utils/constants"
-import { getFilesAC, creacteDirAC, closeModalAC, setCurrentDir, uploadFilesAC, deleteFileAC } from '../reducers/fileReducer'
+import { getFilesAC, creacteDirAC, closeModalAC, uploadFilesAC, deleteFileAC } from '../reducers/fileReducer'
+import myfetch from "../../utils/myfetch"
+import { addUploadFile, openUploaded, progressUploadFile } from '../reducers/uploadedReducer'
 
 
 export const getFiles = (dir = null) => {
   return async dispatch => {
     try {
-      const res = await axios.get(URL + `/files${dir ? '?parent=' + dir : ''}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      })
+      const res = await myfetch.get(`/files${dir ? '?parent=' + dir : ''}`)
       dispatch(getFilesAC(res.data))
     } catch (e) {
       console.log(e)
@@ -20,12 +18,10 @@ export const getFiles = (dir = null) => {
 export const creacteDir = (name, dir) => {
   return async dispatch => {
     try {
-      const res = await axios.post(URL + `/files`,{
+      const res = await myfetch.post('/files', {
         type: "dir",
         name,
         parent: dir
-      }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       dispatch(creacteDirAC(res.data.file))
       dispatch(closeModalAC())
@@ -43,8 +39,15 @@ export const uploadFiles = (file, dir) => {
       if (dir) {
         formData.append('parent', dir)
       }
-      const res = await axios.post(URL + `/files/upload`, formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
+      const uploadedFile = {id: Date.now(), name: file.name, progress: 0}
+      dispatch(openUploaded())
+      dispatch(addUploadFile(uploadedFile))
+      const res = await myfetch.post(`/files/upload`, formData, {
+        onUploadProgress: progressEvent => {
+          const progress = parseInt(Math.floor((progressEvent.loaded / progressEvent.total) * 100 ))
+          uploadedFile.progress = progress
+          dispatch(progressUploadFile(uploadedFile))
+        }
       })
       dispatch(uploadFilesAC(res.data.file))
     } catch (e) {
@@ -57,9 +60,8 @@ export const uploadFiles = (file, dir) => {
 export const downloadFile = (file) => {
   return async dispatch => {
     try {
-      const res = await axios.get(URL + `/files/download`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`},
-        params: {id: file._id},
+      const res = await myfetch.get(`/files/download`, {
+        params: { id: file._id },
         responseType: 'blob'
       })
       const url = window.URL.createObjectURL(new Blob([res.data]))
@@ -77,9 +79,8 @@ export const downloadFile = (file) => {
 export const deleteFile = (file) => {
   return async dispatch => {
     try {
-      const res = await axios.delete(URL + `/files`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}`},
-        params: {id: file._id}
+      const res = await myfetch.delete(`/files`, {
+        params: { id: file._id }
       })
       dispatch(deleteFileAC(res.data.file._id))
     } catch (e) {
