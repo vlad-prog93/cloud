@@ -2,7 +2,6 @@ import FileItem from '../FileItem/FileItem'
 import './FileList.css'
 
 const FileList = ({files}) => {
-  
 
   return (
     <div>

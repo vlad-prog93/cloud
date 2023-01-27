@@ -9,6 +9,7 @@ import Uploaded from '../Uploaded/Uploaded'
 
 const Disk = () => {
   const [isOnDrop, setIsOnDrop] = useState(false)
+  const [sort, setSort] = useState('name')
   const files = useSelector(state => state.files)
   const isVisibleUploaded = useSelector(state => state.uploaded.visible)
   const uploadedFiles = useSelector(state => state.uploaded.files)
@@ -50,8 +51,8 @@ const Disk = () => {
   }
 
   useEffect(() => {
-    dispatch(getFiles(files.currentDir[files.currentDir.length-1]))
-  }, [dispatch, files.currentDir])
+    dispatch(getFiles(files.currentDir[files.currentDir.length-1], sort))
+  }, [dispatch, files.currentDir, sort])
 
   return (
     <section className="disk" onDrop={handleDrop} onDragEnter={handleDragEnter} onDragOver={handleDragEnter} onDragLeave={handleDragLeave}>
@@ -64,6 +65,11 @@ const Disk = () => {
             <label className="disk__button" htmlFor='input__upload'>Загрузить файл</label>
             <input onChange={(e) => handleUploadFile(e)} multiple={true} type="file" id='input__upload' style={{ 'display': 'none' }} />
           </form>
+          <select className='disk__select' value={sort} onChange={(e) => setSort(e.target.value)} name="sort" id="sort">
+            <option value="name">По названию</option>
+            <option value="date">По дате</option>
+            <option value="size">По размеру</option>
+          </select>
         </div>
           <div className='disk__info'>
             <p className='disk__text disk__name'>Название</p>

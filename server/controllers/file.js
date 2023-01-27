@@ -118,7 +118,8 @@ const deleteFile = async (req, res) => {
 const getFiles = async (req, res) => {
   try {
     const parent = req.query.parent
-    const files = await File.find({ user: req.userId, parent })
+    const sort  = req.query.sort
+    const files = await File.find({ user: req.userId, parent }).sort(sort)
     return res.json(files)
   } catch (e) {
     console.log(e)

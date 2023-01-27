@@ -3,10 +3,17 @@ import myfetch from "../../utils/myfetch"
 import { addUploadFile, openUploaded, progressUploadFile } from '../reducers/uploadedReducer'
 
 
-export const getFiles = (dir = null) => {
+export const getFiles = (dir = null, sort) => {
   return async dispatch => {
+    let url
+    if (!dir) {
+      url = `/files${'?sort=' + sort}`
+    }
+    if (dir && sort) {
+      url = `/files${'?parent=' + dir}${'&sort=' + sort}`
+    }
     try {
-      const res = await myfetch.get(`/files${dir ? '?parent=' + dir : ''}`)
+      const res = await myfetch.get(url)
       dispatch(getFilesAC(res.data))
     } catch (e) {
       console.log(e)

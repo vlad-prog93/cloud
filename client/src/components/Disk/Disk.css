@@ -25,7 +25,7 @@
   display: flex;
 }
 
-.disk__button {
+.disk__button, .disk__select {
   border: 1px solid #566885;
   border-radius: 15px;
   padding: 9px 8px;
