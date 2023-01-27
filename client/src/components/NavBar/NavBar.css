@@ -51,3 +51,11 @@
   margin-right: 10px;
   color: #566885;
 }
+
+.nav__search {
+  border: 1px solid #566885;
+  border-radius: 15px;
+  padding: 5px 8px;
+  color: #566885;
+  width: 100%;
+}

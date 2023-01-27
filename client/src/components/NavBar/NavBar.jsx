@@ -3,10 +3,19 @@ import { NavLink } from 'react-router-dom'
 import './NavBar.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAC } from '../../store/reducers/userReducer'
+import { useState } from 'react'
+import { searchFiles } from '../../store/actions/files'
 
 const NavBar = () => {
+  const [search, setSearch] = useState('')
   const { isAuth } = useSelector(state => state.user)
   const dispatch = useDispatch()
+
+  const handleSearchFiles = (value) => {
+    setSearch(value)
+    dispatch(searchFiles(value))
+  }
+
   return (
     <div className="navbar">
       <div className='container'>
@@ -17,6 +26,11 @@ const NavBar = () => {
               <NavLink to='/' className='nav__link'>
                 MERN CLOUD
               </NavLink>
+            </li>
+            <li className="nav__item">
+              {isAuth &&
+                <input className='nav__search' value={search} onChange={(e) => handleSearchFiles(e.target.value)} type="text" placeholder='Поиск...'/>
+              }
             </li>
             <li className="nav__item">
               {!isAuth &&

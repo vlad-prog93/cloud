@@ -1,4 +1,4 @@
-import { getFilesAC, creacteDirAC, closeModalAC, uploadFilesAC, deleteFileAC } from '../reducers/fileReducer'
+import { getFilesAC, creacteDirAC, closeModalAC, uploadFilesAC, deleteFileAC, searchFileAC } from '../reducers/fileReducer'
 import myfetch from "../../utils/myfetch"
 import { addUploadFile, openUploaded, progressUploadFile } from '../reducers/uploadedReducer'
 
@@ -18,7 +18,6 @@ export const getFiles = (dir = null, sort) => {
     } catch (e) {
       console.log(e)
     }
-
   }
 }
 
@@ -90,6 +89,19 @@ export const deleteFile = (file) => {
         params: { id: file._id }
       })
       dispatch(deleteFileAC(res.data.file._id))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+export const searchFiles = (search) => {
+  return async dispatch => {
+    let url = `/files/search${'?search=' + search}`
+
+    try {
+      const res = await myfetch.get(url)
+      dispatch(searchFileAC(res.data))
     } catch (e) {
       console.log(e)
     }

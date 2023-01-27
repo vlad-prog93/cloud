@@ -127,10 +127,23 @@ const getFiles = async (req, res) => {
   }
 }
 
+const searchFiles = async (req, res) => {
+  try {
+    const search = req.query.search
+    let files = await File.find({ user: req.userId })
+    files = files.filter(file => file.name.includes(search))
+    return res.json(files)
+  } catch (e) {
+    console.log(e)
+    return res.status(500).json({ message: 'Ошибка получения файлов' })
+  }
+}
+
 module.exports = {
   createDir,
   getFiles,
   uploadFile,
   downloadFile,
-  deleteFile
+  deleteFile,
+  searchFiles
 }
