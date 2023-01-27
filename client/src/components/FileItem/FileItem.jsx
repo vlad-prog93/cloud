@@ -1,14 +1,16 @@
 import './FileItem.css'
 import dirSvg from '../../img/dir.svg'
 import fileSvg from '../../img/file.svg'
-import { useDispatch, useSelector } from 'react-redux'
-import { backCurrentDir, setCurrentDir } from '../../store/reducers/fileReducer'
+import { useDispatch } from 'react-redux'
+import {  setCurrentDir } from '../../store/reducers/fileReducer'
 import { deleteFile, downloadFile, getFiles } from '../../store/actions/files'
+import deleteSvg from '../../img/icons/delete.svg'
+import downloadSvg from '../../img/icons/download.svg'
+import calculationByte from '../../utils/calculationByte'
 
 const FileItem = ({ file }) => {
   const dispatch = useDispatch()
-  const currentDir = useSelector(state => state.files.currentDir)
-  const files = useSelector(state => state.files)
+
 
   const handleClick = (e) => {
     dispatch(setCurrentDir(file._id))
@@ -26,15 +28,15 @@ const FileItem = ({ file }) => {
     dispatch(deleteFile(file))
   }
   return (
-    <div className='file' onClick={file.type === "dir" ? () => handleClick() : console.log(file.name) }>
+    <div className='file' onClick={file.type === "dir" ? () => handleClick() : null }>
       <p className="file__text file__name">
         <img src={file.type === 'dir' ? dirSvg : fileSvg} alt="#" />
         {<p>{file.name}</p>}
       </p>
-      {file.type !== "dir" && <p className="file__text file__download" onClick={(e) => handleDownload(e)}>Загрузить</p>}
-      <p className="file__text file__delete" onClick={(e) => handleDelete(e)}>Удалить</p>
+      {file.type !== "dir" && <p className="file__text file__download" onClick={(e) => handleDownload(e)}><img src={downloadSvg} /></p>}
+      <p className="file__text file__delete" onClick={(e) => handleDelete(e)}><img src={deleteSvg} /></p>
       <p className="file__text file__date">{file.date.slice(0,10)}</p>
-      <p className="file__text file__size">{file.size}</p>
+      {file.type !== "dir" && <p className="file__text file__size">{calculationByte(file.size)}</p>}
     </div>
   )
 }

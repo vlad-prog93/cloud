@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   margin-top: 30px;
-  border-bottom: 2px solid #566885;
+  border-bottom: 2px solid #8d9c02;
   color: #566885;
   transition: transform 0.2s linear;
   cursor: pointer;
@@ -18,11 +18,36 @@
 }
 
 .file__delete {
+  margin: 0;
   grid-column-start: 4;
 }
 
+.file__delete img {
+  height: 22px;
+  filter: invert(39%) sepia(11%) saturate(1119%) hue-rotate(178deg) brightness(98%) contrast(91%);
+  transition: transform 0.2s linear;
+}
+
+.file__delete img:hover {
+  transform: scale(1.2);
+  filter: invert(49%) sepia(29%) saturate(2075%) hue-rotate(34deg) brightness(101%) contrast(98%);
+}
+
+
 .file__download {
+  margin: 0;
   grid-column-start: 3;
+}
+
+.file__download img {
+  height: 22px;
+  filter: invert(39%) sepia(11%) saturate(1119%) hue-rotate(178deg) brightness(98%) contrast(91%);
+  transition: transform 0.2s linear;
+}
+
+.file__download img:hover {
+  transform: scale(1.2);
+  filter: invert(49%) sepia(29%) saturate(2075%) hue-rotate(34deg) brightness(101%) contrast(98%);
 }
 
 
