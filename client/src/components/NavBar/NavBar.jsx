@@ -1,4 +1,4 @@
-import logo from '../../img/logo.svg'
+import logo from '../../img/MyCloud.png'
 import { NavLink } from 'react-router-dom'
 import './NavBar.css'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +10,7 @@ const NavBar = () => {
   const [search, setSearch] = useState('')
   const { isAuth } = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const activeClassName = "nav__link nav__link_active";
 
   const handleSearchFiles = (value) => {
     setSearch(value)
@@ -23,25 +24,20 @@ const NavBar = () => {
         <nav className="nav">
           <ul className="nav__list">
             <li className="nav__item">
-              <NavLink to='/' className='nav__link'>
-                MERN CLOUD
-              </NavLink>
-            </li>
-            <li className="nav__item">
               {isAuth &&
                 <input className='nav__search' value={search} onChange={(e) => handleSearchFiles(e.target.value)} type="text" placeholder='Поиск...'/>
               }
             </li>
             <li className="nav__item">
               {!isAuth &&
-                <NavLink to='/signin' className='nav__link'>
+                <NavLink to='/signin' className={({ isActive }) => isActive ? activeClassName : 'nav__link'}>
                   Войти
                 </NavLink>
               }
             </li>
             <li className="nav__item">
               {!isAuth &&
-                <NavLink to='/signup' className='nav__link'>
+                <NavLink to='/signup' className={({ isActive }) => isActive ? activeClassName : 'nav__link'}>
                   Регистрация
                 </NavLink>
               }

@@ -21,7 +21,7 @@ const signUp = async (req, res) => {
     const user = await new User({ username, password: hash, roles: [role] })
     await fileService.createDir(new File({user: user._id, name: '', type: 'dir'}))
     await user.save()
-    return res.json({ message: 'Вы успешно зарегестрировались!', id: user._id, role: user.roles })
+    return res.json({ message: 'Вы успешно зарегистрировались!', id: user._id, role: user.roles })
   } catch (e) {
     return res.status(500).json({ message: 'Что-то пошло не так', e })
   }
@@ -52,9 +52,10 @@ const signIn = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
+    
     const user = await User.findById(req.userId)
     if (user) {
-      return res.json({_id: user._id, username: user.username, role: user.roles})
+      return res.json({user})
     }
     return res.json({message: "Пользователь не найден!"})
   } catch(e) {

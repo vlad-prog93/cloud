@@ -9,15 +9,48 @@
   cursor: pointer;
 }
 
+.file-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  border: 1px solid #566885;
+  border-radius: 15px;
+  gap: 30px;
+}
+
+.file-grid__info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.file-grid__info .file__download {
+  margin-left: 30px;
+}
+
 .file__size {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   grid-column-start: 6;
 }
 
+
+
+
 .file__date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   grid-column-start: 5;
 }
 
 .file__delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   grid-column-start: 4;
 }
@@ -35,6 +68,9 @@
 
 
 .file__download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   grid-column-start: 3;
 }
@@ -54,7 +90,7 @@
 .file__text {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   
 }
 
@@ -79,4 +115,27 @@
 
 .file:hover {
   transform: scale(1.01);
+}
+
+.file__text_grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.file__text_grid img {
+  height: 220px;
+}
+
+.file__text_grid {
+  text-align: center;
+}
+
+.file__size_grid {
+  margin-right: 30px;
+  margin-left: auto;
+}
+
+.file__delete_grid {
+  margin-left: 30px;
 }

@@ -16,7 +16,9 @@ const uploadedReducer = (state=initialState, action) => {
     case ADD_UPLOAD_FILE: return {...state, files: [...state.files, action.payload]}
     case REMOVE_UPLOAD_FILE: return {...state, files: [...state.files].filter(file => file.id !== action.payload)}
     case UPLOADED_PROGRESS: return {...state, files: [...state.files].map(file => {
-      if (file.id === action.payload.id) file.progress = action.payload.progress
+      if (file.id === action.payload.id) {
+        return {...file, progress: action.payload.progress}
+      }
       return file
     })}
     default:

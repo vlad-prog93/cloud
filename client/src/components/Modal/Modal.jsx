@@ -19,7 +19,7 @@ const Modal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(creacteDir(dirName, currentDir[currentDir.length-1]))
+    dispatch(creacteDir(dirName, currentDir))
   }
 
   return (

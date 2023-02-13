@@ -5,6 +5,7 @@
   flex-direction: column;
   flex: 1;
 }
+
 .disk__drop {
   min-height: 100%;
   display: flex;
@@ -15,8 +16,8 @@
   flex: 1;
   border: 1px solid #566885;
   color: #566885
-  
 }
+
 .disk__tools {
   display: flex;
 }
@@ -26,13 +27,43 @@
 }
 
 .disk__button, .disk__select {
-  border: 1px solid #566885;
-  border-radius: 15px;
+  border-radius: 12px;
+  border: none;
   padding: 9px 8px;
   cursor: pointer;
   margin-right: 10px;
-  color: #566885;
+  color: #494949;
+  background-color: inherit;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
+  transition: all .3s linear;
 }
+
+.disk__button:hover {
+  box-shadow: 0 0 0 1px #49494929;
+}
+
+.disk__button img {
+  height: 25px;
+  margin-top: 5px;
+}
+
+.disk__button_back {
+  border-radius: 12px;
+  background-color: #005aa3;
+  color: #fff;
+}
+
+.disk__button_back:hover {
+  background-color: #005aa3dd;
+}
+
+.disk__button_back:disabled {
+  background-color: #49494929;
+  cursor: auto;
+}
+
 
 .disk__info {
   display: grid;

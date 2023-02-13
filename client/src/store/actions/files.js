@@ -3,9 +3,10 @@ import myfetch from "../../utils/myfetch"
 import { addUploadFile, openUploaded, progressUploadFile } from '../reducers/uploadedReducer'
 
 
-export const getFiles = (dir = null, sort) => {
+export const getFiles = (dir = null, sort = 'name') => {
   return async dispatch => {
     let url
+
     if (!dir) {
       url = `/files${'?sort=' + sort}`
     }
@@ -16,6 +17,7 @@ export const getFiles = (dir = null, sort) => {
       const res = await myfetch.get(url)
       dispatch(getFilesAC(res.data))
     } catch (e) {
+      alert('error')
       console.log(e)
     }
   }
@@ -45,13 +47,13 @@ export const uploadFiles = (file, dir) => {
       if (dir) {
         formData.append('parent', dir)
       }
-      const uploadedFile = {id: Date.now(), name: file.name, progress: 0}
+      let uploadedFile = {id: Math.random(), name: file.name, progress: 0}
       dispatch(openUploaded())
       dispatch(addUploadFile(uploadedFile))
       const res = await myfetch.post(`/files/upload`, formData, {
         onUploadProgress: progressEvent => {
           const progress = parseInt(Math.floor((progressEvent.loaded / progressEvent.total) * 100 ))
-          uploadedFile.progress = progress
+          uploadedFile = {...uploadedFile, progress: progress}
           dispatch(progressUploadFile(uploadedFile))
         }
       })

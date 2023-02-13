@@ -1,9 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar/NavBar'
-import Login from './components/Login/Login'
 import Disk from './components/Disk/Disk'
-import Register from './components/Register/Register'
+import Auth from './components/Auth/Auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUser } from './store/actions/auth'
@@ -26,8 +25,8 @@ function App() {
             {!isAuth
               ?
               <Routes>
-                <Route path='/signup' element={<Register />} />
-                <Route path='/signin' element={<Login />} />
+                <Route path='/signup' element={<Auth />} />
+                <Route path='/signin' element={<Auth />} />
               </Routes>
               :
               <Routes>
