@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FileList from '../FileList/FileList'
+import Loader from '../Loader/Loader'
 import { openModalAC, backStackDir, setCurrentDir, changeDisplay } from '../../store/reducers/fileReducer'
 import './Disk.css'
 import { getFiles, uploadFiles } from '../../store/actions/files'
@@ -12,11 +13,13 @@ import rowHorizontal from '../../img/icons/row-horizontal.svg'
 const Disk = () => {
   const [isOnDrop, setIsOnDrop] = useState(false)
   const [sort, setSort] = useState('name')
-  const isGrid = useSelector(state => state.files.isGrid)
 
+  const isGrid = useSelector(state => state.files.isGrid)
+  const isLoading = useSelector(state => state.files.isLoading)
   const files = useSelector(state => state.files)
   const isVisibleUploaded = useSelector(state => state.uploaded.visible)
   const uploadedFiles = useSelector(state => state.uploaded.files)
+
   const dispatch = useDispatch()
 
   const back = () => {
@@ -34,23 +37,20 @@ const Disk = () => {
   }
 
   const handleDragEnter = (e) => {
-    console.log(isOnDrop)
-    // e.preventDefault()
-    // e.stopPropagation()
+    e.preventDefault()
+    e.stopPropagation()
     setIsOnDrop(true)
   }
 
   const handleDragLeave = (e) => {
-    console.log(isOnDrop)
-    // e.preventDefault()
-    // e.stopPropagation()
+    e.preventDefault()
+    e.stopPropagation()
     setIsOnDrop(false)
   }
 
   const handleDrop = (e) => {
-    console.log(isOnDrop)
-    // e.preventDefault()
-    // e.stopPropagation()
+    e.preventDefault()
+    e.stopPropagation()
     const sendfiles = [...e.dataTransfer.files]
     sendfiles.forEach(file => dispatch(uploadFiles(file, files.currentDir)))
     setIsOnDrop(false)
@@ -58,7 +58,6 @@ const Disk = () => {
 
   useEffect(() => {
     dispatch(getFiles(files.currentDir, sort))
-    console.log(files.currentDir)
   }, [dispatch, files.currentDir, sort])
 
   return (
@@ -95,9 +94,9 @@ const Disk = () => {
                 <p className='disk__text disk__date'>Дата</p>
                 <p className='disk__text disk__size'>Размер</p>
               </div>
-              <FileList files={files} />
+              {isLoading ? <div className='disk__loader'><Loader /></div> : <FileList files={files} />}
             </>
-            : <FileList files={files} />
+            : isLoading ? <div className='disk__loader'><Loader /></div> : <FileList files={files} />
           }
 
 

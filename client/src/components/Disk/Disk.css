@@ -6,6 +6,13 @@
   flex: 1;
 }
 
+.disk__loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
 .disk__drop {
   min-height: 100%;
   display: flex;
@@ -14,8 +21,8 @@
   align-items: center;
   font-size: 35px;
   flex: 1;
-  border: 1px solid #566885;
-  color: #566885
+  border: 1px solid var(--color-text);
+  color: var(--color-text);
 }
 
 .disk__tools {
@@ -32,7 +39,7 @@
   padding: 9px 8px;
   cursor: pointer;
   margin-right: 10px;
-  color: #494949;
+  color: var(--grey-text-color);
   background-color: inherit;
   font-size: 20px;
   line-height: 28px;
@@ -51,7 +58,7 @@
 
 .disk__button_back {
   border-radius: 12px;
-  background-color: #005aa3;
+  background-color: var(--blue-color);
   color: #fff;
 }
 
@@ -69,8 +76,8 @@
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   margin-top: 30px;
-  border-bottom: 2px solid #566885;
-  color: #566885;
+  border-bottom: 2px solid var(--blue-color);
+  color: var(--blue-color);
 }
 
 
@@ -84,4 +91,8 @@
 
 .disk__text {
   text-align: center;
+}
+
+.disk__form label {
+  margin-top: 5px;
 }

@@ -9,13 +9,16 @@ const UPLOAD_FILES = 'UPLOAD_FILES'
 const DELETE_FILE = 'DELETE_FILE'
 const SEARCH_FILES = 'SEARCH_FILES'
 const CHANGE_DISPLAY = 'CHANGE_DISPLAY'
+const FILE_LOADING = 'FILE_LOADING'
+const FILE_LOADED = 'FILE_LOADED' 
 
 const initialState = {
   files: [],
   currentDir: null,
   stackDir: [],
   visibleModal: false,
-  isGrid: false
+  isGrid: false,
+  isLoading: false
 }
 
 const fileReducer = (state=initialState, action) => {
@@ -31,6 +34,8 @@ const fileReducer = (state=initialState, action) => {
     case DELETE_FILE: return {...state, files: [...state.files.filter(file => file._id !== action.payload)]}
     case SEARCH_FILES: return {...state, files: [...action.payload]}
     case CHANGE_DISPLAY: return {...state, isGrid: !state.isGrid}
+    case FILE_LOADING: return {...state, isLoading: true}
+    case FILE_LOADED: return {...state, isLoading: false}
     default:
       return state
   }
@@ -78,6 +83,14 @@ export const searchFileAC = (files) => {
 
 export const changeDisplay = () => {
   return {type: CHANGE_DISPLAY}
+}
+
+export const fileLoading = () => {
+  return {type: FILE_LOADING}
+}
+
+export const fileLoaded = () => {
+  return {type: FILE_LOADED}
 }
 
 export default fileReducer

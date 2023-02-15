@@ -1,4 +1,4 @@
-import { getFilesAC, creacteDirAC, closeModalAC, uploadFilesAC, deleteFileAC, searchFileAC } from '../reducers/fileReducer'
+import { getFilesAC, creacteDirAC, closeModalAC, uploadFilesAC, deleteFileAC, searchFileAC, fileLoading, fileLoaded } from '../reducers/fileReducer'
 import myfetch from "../../utils/myfetch"
 import { addUploadFile, openUploaded, progressUploadFile } from '../reducers/uploadedReducer'
 
@@ -14,11 +14,14 @@ export const getFiles = (dir = null, sort = 'name') => {
       url = `/files${'?parent=' + dir}${'&sort=' + sort}`
     }
     try {
+      dispatch(fileLoading())
       const res = await myfetch.get(url)
       dispatch(getFilesAC(res.data))
     } catch (e) {
       alert('error')
       console.log(e)
+    } finally {
+      dispatch(fileLoaded())
     }
   }
 }

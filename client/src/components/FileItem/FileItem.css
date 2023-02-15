@@ -3,8 +3,8 @@
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   margin-top: 30px;
-  border-bottom: 2px solid #8d9c02;
-  color: #566885;
+  border-bottom: 2px solid var(--blue-color);
+  color: var(--blue-color);
   transition: transform 0.2s linear;
   cursor: pointer;
 }
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
   width: 25%;
-  border: 1px solid #566885;
+  border: 1px solid var(--blue-color);
   border-radius: 15px;
   gap: 30px;
 }
