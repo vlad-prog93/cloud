@@ -21,8 +21,8 @@
   align-items: center;
   font-size: 35px;
   flex: 1;
-  border: 1px solid var(--color-text);
-  color: var(--color-text);
+  border: 1px solid var(--bright-grey);
+  color: var(--bright-grey);
 }
 
 .disk__tools {
@@ -39,7 +39,7 @@
   padding: 9px 8px;
   cursor: pointer;
   margin-right: 10px;
-  color: var(--grey-text-color);
+  color: var(--dark-grey);
   background-color: inherit;
   font-size: 20px;
   line-height: 28px;
@@ -58,8 +58,8 @@
 
 .disk__button_back {
   border-radius: 12px;
-  background-color: var(--blue-color);
-  color: #fff;
+  background-color: var(--dark-blue);
+  color: #FFFFFF;
 }
 
 .disk__button_back:hover {
@@ -76,8 +76,8 @@
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   margin-top: 30px;
-  border-bottom: 2px solid var(--blue-color);
-  color: var(--blue-color);
+  border-bottom: 2px solid var(--dark-blue);
+  color: var(--dark-blue);
 }
 
 

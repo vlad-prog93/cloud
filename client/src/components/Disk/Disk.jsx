@@ -85,7 +85,9 @@ const Disk = () => {
               <option value="date">По дате</option>
               <option value="size">По размеру</option>
             </select>
-            <button className='disk__button' onClick={() => dispatch(changeDisplay())}><img src={isGrid ? rowVertical : rowHorizontal} /></button>
+            <button className='disk__button' onClick={() => dispatch(changeDisplay())}>
+              <img src={isGrid ? rowVertical : rowHorizontal} alt='Вид'/>
+              </button>
           </div>
           {isGrid
             ? <>

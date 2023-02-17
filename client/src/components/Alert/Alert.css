@@ -1,0 +1,50 @@
+.alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.alert__container {
+    width: 300px;
+    min-height: 200px;
+    background-color: var(--dark-grey);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.alert__progress {
+    background-color: red;
+    height: 5px;
+    border-radius: 5px;
+    width: 0%;
+    animation: progress 3s linear;
+}
+
+.alert__progress_success {
+    background-color: green;
+}
+
+.alert__text {
+    color: #FFFFFF;
+    font-size: 25px;
+    text-align: center;
+}
+
+@keyframes progress {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}

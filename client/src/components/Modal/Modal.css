@@ -16,8 +16,8 @@
 
 .modal__container {
   box-shadow: 0 11px 34px 0 rgba(0, 0, 0, .2);
-  border-radius: 34px;
-  background-color: #fff;
+  border-radius: 10px;
+  background-color: #FFFFFF;
   backdrop-filter: blur(10px);
   width: 650px;
   padding: 40px 40px;
@@ -27,25 +27,25 @@
 }
 
 .modal__button {
+  margin: 0;
   margin-left: auto;
-  padding: 15px;
   font-size: 25px;
   cursor: pointer;
   border: none;
   border-radius: 7px;
   background-color: #fff;
-  color: #494949;
+  color: var(--dark-grey);
   transition: all .3s linear;
 }
 
 .modal__button:hover {
-  color: #494949dd;
+  color: var(--bright-grey);
 }
 
 .modal__title {
   font-weight: 500;
-  color: #566885;
-  margin: 20px 0 70px 0;
+  color: var(--dark-grey);
+  margin: 20px 0 40px 0;
 }
 
 .modal__form {
@@ -55,23 +55,30 @@
 }
 
 .modal__input {
- min-height: 30px;
- border: 1px solid #566885;
- border-radius: 7px;
- color: #566885;
- outline: none;
- margin-bottom: 10px;
+  min-height: 40px;
+  border: 1px solid var(--dark-grey);
+  border-radius: 7px;
+  color: var(--dark-grey);
+  outline: none;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .modal__button-form {
-  padding: 5px;
+  padding: 10px;
   width: 30%;
   cursor: pointer;
   align-self: flex-end;
   cursor: pointer;
-  border: 1px solid #566885;
-  border-radius: 7px;
-  background-color: #FFF;
-  color: #566885;
+  border: 1px solid var(--dark-grey);
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  font-size: 15px;
+  color: var(--dark-grey);
+  transition: all 0.2s linear;
 }
 
+.modal__button-form:hover {
+  background-color: var(--dark-grey);
+  color: #FFFFFF;
+}

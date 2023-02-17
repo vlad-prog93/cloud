@@ -2,6 +2,8 @@ import axios from 'axios'
 import { URL } from '../../utils/constants'
 import { loginAC } from '../reducers/userReducer'
 import myfetch from '../../utils/myfetch'
+import { hideAlert, showAlert } from '../reducers/alertReducer'
+import { Error } from '../../utils/errors'
 
 export const registration = (username, password) => {
     return async dispatch => {
@@ -10,11 +12,13 @@ export const registration = (username, password) => {
                 username,
                 password
             })
-            alert(res.data.message)
-            return true
+            dispatch(showAlert(res.data.message))
         } catch (e) {
-            console.log(e.response.data)
-            return false
+            Error(e, dispatch)
+        } finally {
+            setTimeout(() => {
+                dispatch(hideAlert())
+            }, 3000)
         }
     }
 }
@@ -30,13 +34,16 @@ export const login = (username, password) => {
                 localStorage.setItem('token', res.data.token)
                 dispatch(loginAC(res.data.user))
                 myfetch.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
-                return true
+                dispatch(showAlert(res.data.message))
             } else {
                 throw new Error('Ошибка входа в аккаунт')
             }
         } catch (e) {
-            console.log(e.response.message)
-            return false
+            Error(e, dispatch)
+        } finally {
+            setTimeout(() => {
+                dispatch(hideAlert())
+            }, 3000)
         }
     }
 }

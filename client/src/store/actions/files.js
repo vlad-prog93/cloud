@@ -1,7 +1,7 @@
 import { getFilesAC, creacteDirAC, closeModalAC, uploadFilesAC, deleteFileAC, searchFileAC, fileLoading, fileLoaded } from '../reducers/fileReducer'
 import myfetch from "../../utils/myfetch"
 import { addUploadFile, openUploaded, progressUploadFile } from '../reducers/uploadedReducer'
-
+import {Error} from '../../utils/errors'
 
 export const getFiles = (dir = null, sort = 'name') => {
   return async dispatch => {
@@ -51,8 +51,7 @@ export const uploadFiles = (file, dir) => {
         formData.append('parent', dir)
       }
       let uploadedFile = {id: Math.random(), name: file.name, progress: 0}
-      dispatch(openUploaded())
-      dispatch(addUploadFile(uploadedFile))
+      
       const res = await myfetch.post(`/files/upload`, formData, {
         onUploadProgress: progressEvent => {
           const progress = parseInt(Math.floor((progressEvent.loaded / progressEvent.total) * 100 ))
@@ -60,9 +59,11 @@ export const uploadFiles = (file, dir) => {
           dispatch(progressUploadFile(uploadedFile))
         }
       })
+      dispatch(openUploaded())
+      dispatch(addUploadFile(uploadedFile))
       dispatch(uploadFilesAC(res.data.file))
     } catch (e) {
-      console.log(e)
+      Error(e, dispatch)
     }
   }
 }

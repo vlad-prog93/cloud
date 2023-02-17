@@ -18,7 +18,7 @@ const initialState = {
   stackDir: [],
   visibleModal: false,
   isGrid: false,
-  isLoading: false
+  isLoading: false,
 }
 
 const fileReducer = (state=initialState, action) => {

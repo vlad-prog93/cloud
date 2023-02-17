@@ -30,15 +30,24 @@ const FileItem = ({ file }) => {
     dispatch(deleteFile(file))
   }
 
+  const handleDrag = (file) => {
+    console.log(file)
+  }
+
   if (isGrid) {
     return (
-      <div className='file' onClick={file.type === "dir" ? () => handleClick() : null}>
+      <div className='file' 
+      onDrag={file.type === "dir" ? null : () => handleDrag(file)} 
+      onClick={file.type === "dir" ? () => handleClick() : null}>
         <div className="file__text file__name">
-          <img src={file.type === 'dir' ? dirSvg : fileSvg} alt="#" />
+          <img src={file.type === 'dir' ? dirSvg : fileSvg} alt={file.type === "dir" ? 'Папка' : 'Файл'} />
           {<p>{file.name}</p>}
         </div>
-        {file.type !== "dir" && <p className="file__download" onClick={(e) => handleDownload(e)}><img src={downloadSvg} /></p>}
-        <p className="file__delete" onClick={(e) => handleDelete(e)}><img src={deleteSvg} /></p>
+        {file.type !== "dir" && <p className="file__download" onClick={(e) => handleDownload(e)}>
+          <img src={downloadSvg} alt='download' /></p>}
+        <p className="file__delete" onClick={(e) => handleDelete(e)}>
+          <img src={deleteSvg} alt='delete' />
+          </p>
         <p className="file__date">{file.date.slice(0, 10)}</p>
         {file.type !== "dir" && <p className="file__size">{calculationByte(file.size)}</p>}
       </div>
@@ -46,14 +55,17 @@ const FileItem = ({ file }) => {
   }
 
   return (
-    <div className='file-grid' onClick={file.type === "dir" ? () => handleClick() : null}>
+    <div className='file-grid' 
+    onClick={file.type === "dir" ? () => handleClick() : null}>
       <div className="file__text_grid file__name">
-        <img src={file.type === 'dir' ? dirSvg : fileSvg} alt="#" />
+        <img src={file.type === 'dir' ? dirSvg : fileSvg} alt={file.type === "dir" ? 'Папка' : 'Файл'} />
         {<p>{file.name}</p>}
       </div>
       <div className='file-grid__info'>
-        <p className="file__delete  file__delete_grid" onClick={(e) => handleDelete(e)}><img src={deleteSvg} /></p>
-        {file.type !== "dir" && <p className="file__download" onClick={(e) => handleDownload(e)}><img src={downloadSvg} /></p>}
+        <p className="file__delete  file__delete_grid" onClick={(e) => handleDelete(e)}>
+          <img src={deleteSvg} alt='delete' /></p>
+        {file.type !== "dir" && <p className="file__download" onClick={(e) => handleDownload(e)}>
+          <img src={downloadSvg} alt='download' /></p>}
         {file.type !== "dir" && <p className="file__size file__size_grid">{calculationByte(file.size)}</p>}
       </div>
 

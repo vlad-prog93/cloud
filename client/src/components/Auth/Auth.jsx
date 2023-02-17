@@ -14,13 +14,13 @@ const Auth = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (isLogin) {
-      const isLoginOk = dispatch(login(username, password))
+      const isLoginOk = await dispatch(login(username, password))
       isLoginOk && navigate('/')
     } else {
-      const isRegOk = dispatch(registration(username, password))
+      const isRegOk = await dispatch(registration(username, password))
       isRegOk && navigate('/signin')
     }
     setUsername('')

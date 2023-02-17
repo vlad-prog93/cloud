@@ -7,14 +7,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUser } from './store/actions/auth'
 import Modal from './components/Modal/Modal'
+import { Alert } from './components/Alert/Alert'
 
 function App() {
   const { isAuth } = useSelector(state => state.user)
+  const errorName = useSelector(state => state.error.name)
+  const alert = useSelector(state => state.error.isVisible)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getUser())
-  }, [])
+  }, [dispatch])
 
   return (
     <>
@@ -37,6 +41,7 @@ function App() {
           </div>
         </div>
       </BrowserRouter>
+      {alert && <Alert name={errorName} />}
       <Modal />
     </>
   );
