@@ -1,7 +1,8 @@
 import { getFilesAC, creacteDirAC, closeModalAC, uploadFilesAC, deleteFileAC, searchFileAC, fileLoading, fileLoaded } from '../reducers/fileReducer'
 import myfetch from "../../utils/myfetch"
 import { addUploadFile, openUploaded, progressUploadFile } from '../reducers/uploadedReducer'
-import {Error} from '../../utils/errors'
+import { Error } from '../../utils/errors'
+import { showAlert, hideAlert } from '../reducers/alertReducer'
 
 export const getFiles = (dir = null, sort = 'name') => {
   return async dispatch => {
@@ -36,8 +37,13 @@ export const creacteDir = (name, dir) => {
       })
       dispatch(creacteDirAC(res.data.file))
       dispatch(closeModalAC())
+      dispatch(showAlert('Папка успешно создана'))
     } catch (e) {
-      console.log(e)
+      Error(e, dispatch)
+    } finally {
+      setTimeout(() => {
+        dispatch(hideAlert())
+      }, 2000)
     }
   }
 }
@@ -50,12 +56,12 @@ export const uploadFiles = (file, dir) => {
       if (dir) {
         formData.append('parent', dir)
       }
-      let uploadedFile = {id: Math.random(), name: file.name, progress: 0}
-      
+      let uploadedFile = { id: Math.random(), name: file.name, progress: 0 }
+
       const res = await myfetch.post(`/files/upload`, formData, {
         onUploadProgress: progressEvent => {
-          const progress = parseInt(Math.floor((progressEvent.loaded / progressEvent.total) * 100 ))
-          uploadedFile = {...uploadedFile, progress: progress}
+          const progress = parseInt(Math.floor((progressEvent.loaded / progressEvent.total) * 100))
+          uploadedFile = { ...uploadedFile, progress: progress }
           dispatch(progressUploadFile(uploadedFile))
         }
       })
@@ -83,8 +89,12 @@ export const downloadFile = (file) => {
       document.body.appendChild(link)
       link.click()
     } catch (e) {
-      console.log(e)
-    }
+      Error(e, dispatch)
+    } finally {
+      setTimeout(() => {
+          dispatch(hideAlert())
+      }, 2000)
+  }
   }
 }
 
@@ -95,8 +105,13 @@ export const deleteFile = (file) => {
         params: { id: file._id }
       })
       dispatch(deleteFileAC(res.data.file._id))
+      dispatch(showAlert('Удалено успешно'))
     } catch (e) {
-      console.log(e)
+      Error(e, dispatch)
+    } finally {
+      setTimeout(() => {
+        dispatch(hideAlert())
+      }, 2000)
     }
   }
 }

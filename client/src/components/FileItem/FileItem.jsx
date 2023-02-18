@@ -40,7 +40,10 @@ const FileItem = ({ file }) => {
       onDrag={file.type === "dir" ? null : () => handleDrag(file)} 
       onClick={file.type === "dir" ? () => handleClick() : null}>
         <div className="file__text file__name">
-          <img src={file.type === 'dir' ? dirSvg : fileSvg} alt={file.type === "dir" ? 'Папка' : 'Файл'} />
+          {file.type === 'dir' ? 
+          <img src={dirSvg} alt='Папка' className='file__img_dir' />
+        :
+          <img src={fileSvg} alt='Файл' className='file__img_file' />}
           {<p>{file.name}</p>}
         </div>
         {file.type !== "dir" && <p className="file__download" onClick={(e) => handleDownload(e)}>

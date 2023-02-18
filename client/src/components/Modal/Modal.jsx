@@ -6,20 +6,25 @@ import { closeModalAC } from '../../store/reducers/fileReducer'
 import './Modal.css'
 
 const Modal = () => { 
-  const dispatch = useDispatch()
-  const currentDir = useSelector(state => state.files.currentDir)
   const [dirName, setDirName] = useState('')
+
+  const currentDir = useSelector(state => state.files.currentDir)
   const active = useSelector(state => state.files.visibleModal)
+
+  const dispatch = useDispatch()
+
   const modalClass = active ? 'modal modal_active' : 'modal' 
   
   const handleCloseModal =(e) => {
     e.stopPropagation()
     dispatch(closeModalAC())
+    setDirName('')
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(creacteDir(dirName, currentDir))
+    setDirName('')
   }
 
   return (

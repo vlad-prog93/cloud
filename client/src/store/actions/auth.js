@@ -50,15 +50,18 @@ export const login = (username, password) => {
 
 export const getUser = () => {
     return async dispatch => {
-        try {
-            const token = localStorage.getItem('token')
-            const res = await axios.get(URL + '/auth/me', { headers: { Authorization: `Bearer ${token}` } })
-            dispatch(loginAC(res.data.user))
-            myfetch.defaults.headers.common['Authorization'] = `Bearer ${token}`
-            console.log(res.data)
-        } catch (e) {
-            localStorage.removeItem('token')
-            console.log(e.response)
+        const token = localStorage.getItem('token')
+        if (token) {
+            try {
+                const res = await axios.get(URL + '/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+                dispatch(loginAC(res.data.user))
+                myfetch.defaults.headers.common['Authorization'] = `Bearer ${token}`
+                console.log(res.data)
+            } catch (e) {
+                localStorage.removeItem('token')
+                console.log(e.response)
+            }
         }
+
     }
 }

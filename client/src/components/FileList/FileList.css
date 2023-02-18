@@ -5,3 +5,12 @@
     flex-wrap: wrap;
     gap: 20px;
 }
+
+.file__list-title {
+    margin: 40px auto 0;
+    text-align: center;
+    color: var(--bright-grey);
+    font-size: 35px;
+    line-height: 42px;
+    font-weight: 400;
+}
