@@ -5,7 +5,7 @@ import myfetch from '../../utils/myfetch'
 import { hideAlert, showAlert } from '../reducers/alertReducer'
 import { Error } from '../../utils/errors'
 
-export const registration = (username, password) => {
+export const registration = (username, password, navigate) => {
     return async dispatch => {
         try {
             const res = await axios.post(URL + '/auth/signup', {
@@ -13,6 +13,7 @@ export const registration = (username, password) => {
                 password
             })
             dispatch(showAlert(res.data.message))
+            navigate('/signin')
         } catch (e) {
             Error(e, dispatch)
         } finally {
@@ -23,7 +24,7 @@ export const registration = (username, password) => {
     }
 }
 
-export const login = (username, password) => {
+export const login = (username, password, navigate) => {
     return async dispatch => {
         try {
             const res = await axios.post(URL + '/auth/signin', {
@@ -35,6 +36,7 @@ export const login = (username, password) => {
                 dispatch(loginAC(res.data.user))
                 myfetch.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
                 dispatch(showAlert(res.data.message))
+                navigate('/')
             } else {
                 throw new Error('Ошибка входа в аккаунт')
             }
@@ -62,6 +64,5 @@ export const getUser = () => {
                 console.log(e.response)
             }
         }
-
     }
 }

@@ -19,7 +19,7 @@ export const getFiles = (dir = null, sort = 'name') => {
       const res = await myfetch.get(url)
       dispatch(getFilesAC(res.data))
     } catch (e) {
-      alert('error')
+      Error(e, dispatch)
       console.log(e)
     } finally {
       dispatch(fileLoaded())

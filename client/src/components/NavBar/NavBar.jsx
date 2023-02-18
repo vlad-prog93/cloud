@@ -15,7 +15,7 @@ const NavBar = () => {
   const debounceValue = useDebounce(search, 500)
 
   useEffect(()=> {
-    isAuth && dispatch(searchFiles(debounceValue))
+    isAuth && search && dispatch(searchFiles(debounceValue))
   }, [debounceValue, dispatch])
 
   return (

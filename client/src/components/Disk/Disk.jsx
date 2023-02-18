@@ -19,6 +19,7 @@ const Disk = () => {
   const files = useSelector(state => state.files)
   const isVisibleUploaded = useSelector(state => state.uploaded.visible)
   const uploadedFiles = useSelector(state => state.uploaded.files)
+  const isAuth = useSelector(state => state.user.isAuth)
 
   const dispatch = useDispatch()
 
@@ -57,7 +58,7 @@ const Disk = () => {
   }
 
   useEffect(() => {
-    dispatch(getFiles(files.currentDir, sort))
+    isAuth && dispatch(getFiles(files.currentDir, sort))
   }, [dispatch, files.currentDir, sort])
 
   return (

@@ -23,9 +23,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBar />
         <div className="App">
           <div className='wrapper'>
+          <NavBar />
             {!isAuth
               ?
               <Routes>
