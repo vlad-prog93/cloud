@@ -9,6 +9,7 @@ import { getFiles, uploadFiles } from '../../store/actions/files'
 import Uploaded from '../Uploaded/Uploaded'
 import rowVertical from '../../img/icons/row-vertical.svg'
 import rowHorizontal from '../../img/icons/row-horizontal.svg'
+import { getUser } from '../../store/actions/auth'
 
 const Disk = () => {
   const [isOnDrop, setIsOnDrop] = useState(false)
@@ -19,7 +20,7 @@ const Disk = () => {
   const files = useSelector(state => state.files)
   const isVisibleUploaded = useSelector(state => state.uploaded.visible)
   const uploadedFiles = useSelector(state => state.uploaded.files)
-  const isAuth = useSelector(state => state.user.isAuth)
+  const user = useSelector(state => state.user.user)
 
   const dispatch = useDispatch()
 
@@ -35,6 +36,7 @@ const Disk = () => {
       dispatch(uploadFiles(file, files.currentDir))
     })
     e.target.value = ''
+    dispatch(getUser())
   }
 
   const handleDragEnter = (e) => {
@@ -58,7 +60,7 @@ const Disk = () => {
   }
 
   useEffect(() => {
-    isAuth && dispatch(getFiles(files.currentDir, sort))
+    dispatch(getFiles(files.currentDir, sort))
   }, [dispatch, files.currentDir, sort])
 
   return (
@@ -90,6 +92,7 @@ const Disk = () => {
             <button className='disk__button' onClick={() => dispatch(changeDisplay())}>
               <img src={isGrid ? rowVertical : rowHorizontal} alt='Вид'/>
               </button>
+            <p className='disk__disk-space'>Память - {Math.round(user.usedSpace/(1024*1024))} Mб/{Math.round(user.diskSpace/1024**3)} Гб</p>
           </div>
           {isGrid
             ? <>

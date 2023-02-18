@@ -51,6 +51,10 @@
   box-shadow: 0 0 0 1px #49494929;
 }
 
+.disk__form .disk__button{
+  margin-top: 10px;
+}
+
 .disk__button img {
   height: 25px;
   margin-top: 5px;
@@ -95,4 +99,12 @@
 
 .disk__form label {
   margin-top: 5px;
+}
+
+.disk__disk-space {
+  margin-left: auto;
+  color: var(--dark-grey);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
 }

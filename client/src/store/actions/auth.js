@@ -58,7 +58,6 @@ export const getUser = () => {
                 const res = await axios.get(URL + '/auth/me', { headers: { Authorization: `Bearer ${token}` } })
                 dispatch(loginAC(res.data.user))
                 myfetch.defaults.headers.common['Authorization'] = `Bearer ${token}`
-                console.log(res.data)
             } catch (e) {
                 localStorage.removeItem('token')
                 console.log(e.response)
