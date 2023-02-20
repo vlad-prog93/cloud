@@ -53,6 +53,7 @@
   justify-content: center;
   margin: 0;
   grid-column-start: 4;
+  cursor: pointer;
 }
 
 .file__delete img {
@@ -73,6 +74,7 @@
   justify-content: center;
   margin: 0;
   grid-column-start: 3;
+  cursor: pointer;
 }
 
 .file__download img {

@@ -36,21 +36,21 @@ const FileItem = ({ file }) => {
 
   if (isGrid) {
     return (
-      <div className='file' 
-      onDrag={file.type === "dir" ? null : () => handleDrag(file)} 
-      onClick={file.type === "dir" ? () => handleClick() : null}>
+      <div className='file'
+        onDrag={file.type === "dir" ? null : () => handleDrag(file)}
+        onClick={file.type === "dir" ? () => handleClick() : null}>
         <div className="file__text file__name">
-          {file.type === 'dir' ? 
-          <img src={dirSvg} alt='Папка' className='file__img_dir' />
-        :
-          <img src={fileSvg} alt='Файл' className='file__img_file' />}
+          {file.type === 'dir' ?
+            <img src={dirSvg} alt='Папка' className='file__img_dir' />
+            :
+            <img src={fileSvg} alt='Файл' className='file__img_file' />}
           {<p>{file.name}</p>}
         </div>
         {file.type !== "dir" && <p className="file__download" onClick={(e) => handleDownload(e)}>
           <img src={downloadSvg} alt='download' /></p>}
         <p className="file__delete" onClick={(e) => handleDelete(e)}>
           <img src={deleteSvg} alt='delete' />
-          </p>
+        </p>
         <p className="file__date">{file.date.slice(0, 10)}</p>
         {file.type !== "dir" && <p className="file__size">{calculationByte(file.size)}</p>}
       </div>
@@ -58,10 +58,13 @@ const FileItem = ({ file }) => {
   }
 
   return (
-    <div className='file-grid' 
-    onClick={file.type === "dir" ? () => handleClick() : null}>
+    <div className='file-grid'
+      onClick={file.type === "dir" ? () => handleClick() : null}>
       <div className="file__text_grid file__name">
-        <img src={file.type === 'dir' ? dirSvg : fileSvg} alt={file.type === "dir" ? 'Папка' : 'Файл'} />
+        {file.type === 'dir' ?
+          <img src={dirSvg} alt='Папка' className='file__img_dir' />
+          :
+          <img src={fileSvg} alt='Файл' className='file__img_file' />}
         {<p>{file.name}</p>}
       </div>
       <div className='file-grid__info'>
