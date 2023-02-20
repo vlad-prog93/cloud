@@ -117,6 +117,7 @@
 
 .file__img_dir {
   filter: invert(54%) sepia(13%) saturate(956%) hue-rotate(177deg) brightness(88%) contrast(94%);
+  cursor: pointer;
 }
 
 .file__img_file {
