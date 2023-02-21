@@ -36,7 +36,6 @@ const Disk = () => {
       dispatch(uploadFiles(file, files.currentDir))
     })
     e.target.value = ''
-    dispatch(getUser())
   }
 
   const handleDragEnter = (e) => {
@@ -62,7 +61,6 @@ const Disk = () => {
   useEffect(() => {
     dispatch(getFiles(files.currentDir, sort))
     dispatch(getUser())
-    console.log('dfds')
   }, [dispatch, files.currentDir, sort, files.files.length])
 
   return (

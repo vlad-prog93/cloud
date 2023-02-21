@@ -6,6 +6,7 @@ import { logoutAC } from '../../store/reducers/userReducer'
 import { useEffect, useState } from 'react'
 import { searchFiles } from '../../store/actions/files'
 import { useDebounce } from '../../hooks/useDebounce'
+import { removeAllUploadFiles } from '../../store/reducers/uploadedReducer'
 
 const NavBar = () => {
   const [search, setSearch] = useState('')
@@ -14,6 +15,10 @@ const NavBar = () => {
   const activeClassName = "nav__link nav__link_active";
   const debounceValue = useDebounce(search, 500)
 
+  const exit = () => {
+    dispatch(logoutAC())
+    dispatch(removeAllUploadFiles())
+  }
   useEffect(()=> {
     isAuth && search && dispatch(searchFiles(debounceValue))
   }, [debounceValue, dispatch])
@@ -45,7 +50,7 @@ const NavBar = () => {
             </li>
             <li className="nav__item">
               {isAuth &&
-                <button onClick={() => dispatch(logoutAC())} className='nav__link'>
+                <button onClick={() => exit()} className='nav__link'>
                   Выйти
                 </button>
               }

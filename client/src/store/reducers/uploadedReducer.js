@@ -3,6 +3,7 @@ const CLOSE_UPLOADED = 'CLOSE_UPLOADED'
 const ADD_UPLOAD_FILE = 'ADD_UPLOAD_FILE'
 const REMOVE_UPLOAD_FILE = 'REMOVE_UPLOAD_FILE'
 const UPLOADED_PROGRESS = 'UPLOADED_PROGRESS'
+const REMOVE_ALL_UPLOAD_FILES = 'REMOVE_ALL_UPLOAD_FILES'
 
 const initialState = {
   visible: false,
@@ -21,6 +22,7 @@ const uploadedReducer = (state=initialState, action) => {
       }
       return file
     })}
+    case REMOVE_ALL_UPLOAD_FILES: return {...state, files: [], visible: false}
     default:
       return state
   }
@@ -28,6 +30,10 @@ const uploadedReducer = (state=initialState, action) => {
 
 export const openUploaded = () => {
   return {type: OPEN_UPLOADED}
+}
+
+export const removeAllUploadFiles = () => {
+  return {type: REMOVE_ALL_UPLOAD_FILES}
 }
 
 export const closeUploaded = () => {
