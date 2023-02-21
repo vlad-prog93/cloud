@@ -96,6 +96,7 @@ const deleteFile = async (req, res) => {
   try {
     const file = await File.findOne({ user: req.userId, _id: req.query.id })
     const pathFile = path.join(__dirname, '../files', req.userId, file.path, file.name || '')
+    const user = await User.findOne({ _id: req.userId })
 
     if (file.type === "dir") {
       const pathFile = path.join(__dirname, '../files', req.userId, file.path)
@@ -106,6 +107,8 @@ const deleteFile = async (req, res) => {
       if (fs.existsSync(pathFile)) {
         fs.unlinkSync(pathFile)
         const dbFile = await File.findOneAndDelete({ user: req.userId, _id: req.query.id })
+        user.usedSpace = user.usedSpace - file.size
+        await user.save()
         return res.json({ file: dbFile })
       }
     }
@@ -120,8 +123,6 @@ const getFiles = async (req, res) => {
   try {
     const parent = req.query.parent
     const sort  = req.query.sort
-    console.log('parent: ', parent)
-    console.log('sort: ', sort)
     const files = await File.find({ user: req.userId, parent }).sort(sort)
     return res.json(files)
   } catch (e) {

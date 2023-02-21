@@ -7,13 +7,14 @@ import { deleteFile, downloadFile, getFiles } from '../../store/actions/files'
 import deleteSvg from '../../img/icons/delete.svg'
 import downloadSvg from '../../img/icons/download.svg'
 import calculationByte from '../../utils/calculationByte'
+import { getUser } from '../../store/actions/auth'
 
 const FileItem = ({ file }) => {
   const isGrid = useSelector(state => state.files.isGrid)
   const dispatch = useDispatch()
 
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     dispatch(setCurrentDir(file._id))
     dispatch(setStackDir(file._id))
     dispatch(getFiles(file._id))
@@ -28,6 +29,7 @@ const FileItem = ({ file }) => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(deleteFile(file))
+    dispatch(getUser())
   }
 
   const handleDrag = (file) => {
