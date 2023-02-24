@@ -9,7 +9,6 @@ const File = require('../models/File')
 const createDir = async (req, res) => {
   try {
     const { name, type, parent } = req.body
-    console.log('name: ', name, 'type: ', type, 'parent: ', parent)
     const file = new File({ name, type, parent, user: req.userId })
     const parentFile = await File.findOne({ _id: parent })
     if (!parentFile) {
@@ -123,7 +122,12 @@ const getFiles = async (req, res) => {
   try {
     const parent = req.query.parent
     const sort  = req.query.sort
-    const files = await File.find({ user: req.userId, parent }).sort(sort)
+    let files
+    if (sort) {
+      const files = await File.find({ user: req.userId, parent }).sort(sort)
+    } else {
+      const files = await File.find({ user: req.userId, parent })
+    }
     return res.json(files)
   } catch (e) {
     console.log(e)
