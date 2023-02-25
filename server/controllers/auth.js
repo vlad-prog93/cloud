@@ -18,14 +18,13 @@ const signUp = async (req, res) => {
     if (candidate) { return res.status(403).json({ message: 'Пользователь с таким именем уже существует' }) }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
-    const user = await new User({ username, password: hash, roles: [role] })
+    const user = new User({ username, password: hash, roles: [role] })
     await fileService.createDir(new File({user: user._id, name: '', type: 'dir'}))
     await user.save()
     return res.json({ message: 'Вы успешно зарегистрировались!', id: user._id, role: user.roles })
   } catch (e) {
     return res.status(500).json({ message: 'Что-то пошло не так', e })
   }
-  return res.json({ message: 'hello bro' })
 }
 
 const signIn = async (req, res) => {

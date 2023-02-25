@@ -60,7 +60,7 @@ const Disk = () => {
 
   useEffect(() => {
     dispatch(getFiles(files.currentDir, sort))
-    dispatch(getUser())
+    // dispatch(getUser())
   }, [dispatch, files.currentDir, sort, files.files.length])
 
   return (

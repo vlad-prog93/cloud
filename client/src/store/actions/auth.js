@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { URL } from '../../utils/constants'
-import { loginAC } from '../reducers/userReducer'
+import { loginAC, setAdminAC, userFetching, userFetchingSuccess } from '../reducers/userReducer'
 import myfetch from '../../utils/myfetch'
 import { hideAlert, showAlert } from '../reducers/alertReducer'
 import { Error } from '../../utils/errors'
@@ -34,6 +34,9 @@ export const login = (username, password, navigate) => {
             if (res.data.token) {
                 localStorage.setItem('token', res.data.token)
                 dispatch(loginAC(res.data.user))
+                if (res.data.user?.roles?.includes('ADMIN')) {
+                    dispatch(setAdminAC())
+                }
                 myfetch.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
                 dispatch(showAlert(res.data.message))
                 navigate('/')
@@ -55,12 +58,18 @@ export const getUser = () => {
         const token = localStorage.getItem('token')
         if (token) {
             try {
+                dispatch(userFetching())
                 const res = await axios.get(URL + '/auth/me', { headers: { Authorization: `Bearer ${token}` } })
                 dispatch(loginAC(res.data.user))
+                if (res.data.user?.roles?.includes('ADMIN')) {
+                    dispatch(setAdminAC())
+                }
                 myfetch.defaults.headers.common['Authorization'] = `Bearer ${token}`
             } catch (e) {
                 localStorage.removeItem('token')
                 console.log(e.response)
+            } finally {
+                dispatch(userFetchingSuccess())
             }
         }
     }
